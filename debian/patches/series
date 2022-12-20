@@ -1,0 +1,3 @@
+# 01-Workaround_gccgo_bug.patch
+# 02-Disable_benchmarks_gccgo.patch
+03-Regenerate_all.patch

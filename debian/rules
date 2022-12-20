@@ -1,0 +1,14 @@
+#!/usr/bin/make -f
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+export BUILDDIR := $(CURDIR)/_build
+
+%:
+	dh $@ --builddirectory=$(BUILDDIR) --buildsystem=golang --with golang
+
+execute_after_dh_auto_configure:
+	cd $(BUILDDIR)/src/github.com/golang/protobuf; \
+            GOPATH=$(BUILDDIR) GOCACHE=$(BUILDDIR)/go-build \
+	    $(CURDIR)/regenerate.sh

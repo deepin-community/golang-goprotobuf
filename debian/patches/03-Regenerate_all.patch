@@ -1,0 +1,20 @@
+Description: Patch regenerate.sh script to rebuild all *.pb.go files.
+--- a/regenerate.sh
++++ b/regenerate.sh
+@@ -19,6 +19,8 @@
+ PROTO_DIRS=(
+   jsonpb/jsonpb_test_proto
+   proto
++  protoc-gen-go/descriptor
++  protoc-gen-go/plugin
+   protoc-gen-go/testdata
+ )
+ for dir in ${PROTO_DIRS[@]}; do
+@@ -50,3 +52,7 @@
+ protoc --go_out=paths=source_relative:$tmpdir google/protobuf/descriptor.proto
+ cp $tmpdir/google/protobuf/descriptor.pb.go protoc-gen-go/descriptor
+ cp $PROTO_INCLUDE/google/protobuf/descriptor.proto protoc-gen-go/descriptor
++
++echo "# google/protobuf/field_mask.proto"
++mkdir -p vendor
++protoc -I$PROTO_INCLUDE --go_out=plugins=grpc:vendor google/protobuf/field_mask.proto
